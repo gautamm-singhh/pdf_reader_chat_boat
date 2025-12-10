@@ -13,9 +13,12 @@ from langchain.prompts import PromptTemplate
 from langchain.schema import Document
 from langchain.chains import RetrievalQA
 
-load_dotenv()
-os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
-
+try:
+    os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
+except:
+    from dotenv import load_dotenv
+    load_dotenv()
+    os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
 # ======================================================
 # ---------------  TEXT CLEANING -----------------------
 # ======================================================
@@ -589,13 +592,20 @@ hr {
 # ======================================================
 with st.sidebar:
     # Logo with enhanced styling
-    logo_path = "images (1).jpeg"
+    # Line ~547 ke around
+    logo_path = "logo.jpeg"
     if os.path.exists(logo_path):
         st.markdown("""
         <div class='logo-container'>
         """, unsafe_allow_html=True)
         st.image(logo_path, width=180)
         st.markdown("""
+            <p class='logo-text'>NIT UTTARAKHAND</p>
+        </div>
+        """, unsafe_allow_html=True)
+    else:
+        st.markdown("""
+        <div class='logo-container'>
             <p class='logo-text'>NIT UTTARAKHAND</p>
         </div>
         """, unsafe_allow_html=True)
